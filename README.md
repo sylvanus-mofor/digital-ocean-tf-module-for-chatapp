@@ -27,8 +27,7 @@ Or find it in DigitalOcean console: **Settings → Security → SSH Keys**
 
 ### 2. Configure
 
-Create tfvars file in your project root `terraform.tfvars`:
-
+Create a .tfvars file in your project root `terraform.tfvars` with the following contents:
 ```hcl
 ssh_key_fingerprints = ["your:ssh:key:fingerprint"]
 do_token = "your_digitalocean_token"
@@ -37,7 +36,6 @@ additional_allowed_ips = ["list the ips you would like to whitelist through your
 ```
 
 ### 3. Deploy
-
 ```bash
 terraform init
 terraform plan
@@ -45,7 +43,6 @@ terraform apply
 ```
 
 ### 4. Connect
-
 ```bash
 # Get the SSH command
 terraform output ssh_connection
@@ -61,29 +58,19 @@ The firewall automatically allows:
 - **Port 22 (SSH)**: Your current IP + any additional IPs you specify
 - **Port 80 (HTTP)**: All traffic
 - **Port 443 (HTTPS)**: All traffic
-- **Port 8081**: Your current IP + additional IPs
 - **Port 7071**: All traffic
 
 ## Adding More IPs
-
 To allow additional IPs for SSH and restricted ports:
-
 ```hcl
 # In terraform.tfvars
 additional_allowed_ips = ["xx.xx.xx.xx", "yy.yy.yy.yy"]
 ```
 
 ## If Your IP Changes
+If your IP changes, just run the `terraform apply` again and the firewall will update with your new IP.
 
-Your current IP is detected automatically when you run Terraform. If your IP changes, just run :
-
-```bash
-terraform apply
-```
-
-againand the firewall will update with your new IP.
-
-## Useful Commands
+## Other Useful Commands
 
 ```bash
 # See all outputs
@@ -103,7 +90,7 @@ terraform destroy
 
 Approximate monthly cost: **$58-68**
 - Droplet (s-4vcpu-8gb): $48/month
-- Automated backups: ~$10/month
+- Automated backups: ~$10/month if turned on
 
 To reduce costs, use a smaller droplet size in `main.tf`:
 ```hcl

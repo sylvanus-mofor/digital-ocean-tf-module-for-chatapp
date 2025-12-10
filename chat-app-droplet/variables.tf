@@ -56,7 +56,7 @@ variable "ssh_keys" {
 variable "enable_backups" {
   description = "Enable automated backups for the droplet."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "environment" {
