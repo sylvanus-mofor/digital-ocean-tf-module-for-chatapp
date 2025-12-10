@@ -18,11 +18,11 @@ resource "digitalocean_droplet" "main" {
   ssh_keys = var.ssh_keys
   # count = 2 You can uncomment this line to create multiple droplets, some config is needed to achieve this
   
-  // Production best practices
-  monitoring           = true
-  ipv6                 = true
+  // Production best practices make true
+  monitoring           = false
+  ipv6                 = false
   backups              = var.enable_backups
-  graceful_shutdown    = true
+  graceful_shutdown    = false
   
   tags = concat(
     var.tags,
