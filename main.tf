@@ -27,7 +27,7 @@ data "http" "current_ip" {
 
 locals {
   current_ip = chomp(data.http.current_ip.response_body)
-  # Additional IPs that need access (optional - remove if not needed)
+  # Additional IPs that need access (add them in terraform.tfvars file in project root)
   additional_ips = var.additional_allowed_ips
   # Combine current IP with any additional IPs
   ssh_allowed_ips = concat(
@@ -58,11 +58,11 @@ resource "digitalocean_firewall" "chat_app_firewall" {
     source_addresses = ["0.0.0.0/0"]
   }
   
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "8081"
-    source_addresses = local.restricted_port_ips
-  }
+  # inbound_rule {
+  #   protocol         = "tcp"
+  #   port_range       = "8081"
+  #   source_addresses = local.restricted_port_ips
+  # }
   
   inbound_rule {
     protocol         = "tcp"
@@ -99,8 +99,8 @@ module "chat-app-droplet" {
   source = "./chat-app-droplet"
   droplet_name  = "chat-app-droplet-prod"
   region        = "tor1"
-  # droplet_size = "s-4vcpu-8gb" bigger size
   droplet_size = "s-2vcpu-4gb"
+  # use "s-4vcpu-8gb" or another bigger size when required
   ssh_keys = var.ssh_key_fingerprints
   
   // settings
