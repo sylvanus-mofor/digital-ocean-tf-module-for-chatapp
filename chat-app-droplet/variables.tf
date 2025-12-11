@@ -77,7 +77,7 @@ variable "tags" {
 }
 
 variable "user_data" {
-  description = "User data script to run on droplet initialization."
+  description = "User data script to run when droplet starts."
   type        = string
   default     = <<-EOF
     #!/bin/bash
@@ -94,8 +94,8 @@ variable "user_data" {
     
     # Uncomment the following 3 lines to clone and run chat-app upon droplet initialization
     
-    # git clone enter_git-repo-url here /opt/chat-app
-    # cd /opt/chat-app
-    # docker compose up -d --build
+    git clone https://github.com/sylvanus-mofor/chat-app.git /opt/chat-app
+    cd /opt/chat-app
+    docker compose up -d --build
   EOF
 }
