@@ -43,7 +43,6 @@ locals {
 // Firewall resource
 resource "digitalocean_firewall" "chat_app_firewall" {
   name = "chat-app-firewall"
-  
   droplet_ids = [module.chat-app-droplet.droplet_id]
   
   inbound_rule {
@@ -57,12 +56,6 @@ resource "digitalocean_firewall" "chat_app_firewall" {
     port_range       = "80"
     source_addresses = ["0.0.0.0/0"]
   }
-  
-  # inbound_rule {
-  #   protocol         = "tcp"
-  #   port_range       = "8081"
-  #   source_addresses = local.restricted_port_ips
-  # }
   
   inbound_rule {
     protocol         = "tcp"
@@ -99,12 +92,12 @@ module "chat-app-droplet" {
   source = "./chat-app-droplet"
   droplet_name  = "chat-app-droplet-prod"
   region        = "tor1"
-  droplet_size = "s-2vcpu-4gb"
-  # use "s-4vcpu-8gb" or another bigger size when required
+  droplet_size = "s-2vcpu-4gb" # use for standard size
+  # droplet_size = "s-4vcpu-8gb"   # use for bigger size
   ssh_keys = var.ssh_key_fingerprints
   
   // settings
-  enable_backups = true
+  enable_backups = false
   environment    = "prod"
   
   // Tags
