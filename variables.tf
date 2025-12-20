@@ -1,4 +1,4 @@
-// infra/variables.tf - Root Module Variables
+// infra/variables.tf - (Root Module Variables)
 
 variable "ssh_key_fingerprints" {
   description = "SSH key fingerprints to add to the droplet. Get these with: doctl compute ssh-key list"
